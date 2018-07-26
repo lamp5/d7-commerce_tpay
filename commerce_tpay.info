@@ -1,0 +1,10 @@
+name = Commerce Tpay
+description = Implements tpay.com payments in Drupal Commerce.
+package = Commerce
+core = "7.x"
+type = module
+dependencies[] = commerce_payment
+
+
+
+
