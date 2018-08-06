@@ -74,8 +74,11 @@ function commerce_tpay_verify()
         return;
       }
       else{
-        watchdog('commerce_tpay', 'Invalid checksum: @md5.', array('@md5' => $md5), WATCHDOG_WARNING);
+        watchdog('commerce_tpay', 'Invalid checksum: @md5', array('@md5' => $md5), WATCHDOG_WARNING);
       }
+    }
+    else{
+        watchdog('commerce_transferuj_pl', 'Invalid Remote addr: @addr', array('@addr' => $_SERVER['REMOTE_ADDR']), WATCHDOG_WARNING);
     }
   }
   echo "FALSE";

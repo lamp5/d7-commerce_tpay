@@ -53,7 +53,7 @@ function commerce_tpay_settings_form($settings = NULL)
   $settings = (array)$settings + array(
       'sid' => 0,
       'cod' => '',
-      'ip' => $_SERVER['REMOTE_ADDR']
+      'ip' => '195.149.229.109,148.251.96.163,178.32.201.77,46.248.167.59,46.29.19.106'
     );
 
   $form['sid'] = array(
@@ -74,7 +74,7 @@ function commerce_tpay_settings_form($settings = NULL)
     '#title' => t('Server IP'),
     '#type' => 'textfield',
     '#default_value' => $settings['ip'],
-    '#description' => t('Your server IP from $_SERVER["REMOTE_ADDR"] variable. Coma separated values.'),
+    '#description' => t('Tpay server IP notification. Coma separated values.'),
   );
 
   return $form;
@@ -126,14 +126,14 @@ function commerce_tpay_redirect_form($form, &$form_state, $order, $payment_metho
   $crc = $order->order_id . ':' . $order->data['payment_redirect_key'];
   $sid = $payment_method['settings']['sid'];
   $pmid = $payment_method['settings']['cod'];
-  $md5 = $sid . number_format($amount / 100, 2). $crc . $pmid;
+  $md5 = $sid . $amount / 100 . $crc . $pmid;
 
   $url_fail = "checkout/" . $order->order_id . "/payment/back/" . $order->data['payment_redirect_key'];
   $url_ok = "checkout/" . $order->order_id . "/payment/return/" . $order->data['payment_redirect_key'];
 
   $data = array(
     'id' => $payment_method['settings']['sid'],
-    'kwota' => number_format($amount / 100, 2),
+    'kwota' => $amount / 100,
     'opis' => t('Order number @order_number in @store', array('@order_number' => $order->order_number, '@store' => variable_get('site_name', url('<front>', array('absolute' => TRUE))))),
     'crc' => $crc,
     'wyn_url' => url('commerce_tpay/verify', array('absolute' => TRUE)),
